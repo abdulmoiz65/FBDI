@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python .claude/skills/po-fbdi/scripts/inspect_client_file.py:*)",
+      "Bash(python .claude/skills/po-fbdi/scripts/convert_to_fbdi.py:*)",
+      "Bash(python .claude/skills/po-fbdi/scripts/build_template.py:*)",
+      "Bash(python .claude/skills/po-fbdi/scripts/make_sample_filled.py:*)"
+    ]
+  }
+}

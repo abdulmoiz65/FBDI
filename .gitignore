@@ -1,0 +1,10 @@
+# Client data - keep off the public repo
+/*.xlsx
+inbox/
+output/
+reference/Rewaa Tech*
+reference/Tamam*
+
+# Python
+__pycache__/
+*.pyc

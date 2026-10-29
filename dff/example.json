@@ -1,0 +1,100 @@
+{
+  "client": "Example Trading Co.",
+  "confirmed_from": "TEMPLATE - replace this. Record who confirmed the attribute columns, from which instance, and when. Example: 'A Rahman (Fusion functional lead), UAT2 pod, Setup and Maintenance > Manage Descriptive Flexfields, 2026-09-08'.",
+  "_how_to_fill_this_in": [
+    "1. In the client's instance: Setup and Maintenance > Manage Descriptive Flexfields.",
+    "2. Search the flexfield code for the level you need:",
+    "     header PO_HEADERS | line PO_LINES | schedule PO_LINE_LOCATIONS | distribution PO_DISTRIBUTIONS",
+    "3. Edit > Manage Contexts > open the context the client uses > look at its segments.",
+    "4. For each segment copy TWO things: the Prompt (becomes 'name') and the",
+    "   Column Name (becomes 'attribute'). They are unrelated - a segment prompted",
+    "   'Project Code' can sit in ATTRIBUTE12. Never guess the column name.",
+    "5. Note the Context Code once per level (becomes 'context'). A row can carry",
+    "   only one context per level.",
+    "6. Delete every field below that the client does not have.",
+    "Then:  build_template.py --dff dff/<client>.json",
+    "       convert_to_fbdi.py <file> --dff dff/<client>.json      (the SAME file)"
+  ],
+
+  "fields": [
+    {
+      "key": "budget_owner",
+      "level": "header",
+      "name": "Budget Owner",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE1",
+      "type": "text",
+      "required": true,
+      "values": ["Finance", "Operations", "IT", "Facilities", "HR"],
+      "hint": "Department that owns the budget.",
+      "guide": "Department that owns the budget for this purchase order. Pick from the list - these are the values configured in your Oracle instance."
+    },
+    {
+      "key": "legacy_contract_ref",
+      "level": "header",
+      "name": "Contract Reference",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE2",
+      "type": "text",
+      "required": false,
+      "hint": "Framework contract number, if any.",
+      "guide": "Reference of the framework contract this PO was raised against in the legacy system. Leave blank if the PO was standalone."
+    },
+    {
+      "key": "budget_year",
+      "level": "header",
+      "name": "Budget Year",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE_NUMBER1",
+      "type": "number",
+      "required": false,
+      "hint": "Four-digit year, e.g. 2026.",
+      "guide": "Financial year the spend is booked against, as a four digit year."
+    },
+    {
+      "key": "original_request_date",
+      "level": "header",
+      "name": "Original Request Date",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE_DATE1",
+      "type": "date",
+      "required": false,
+      "hint": "When it was first requested.",
+      "guide": "Date the purchase was originally requested in the legacy system, as YYYY-MM-DD."
+    },
+    {
+      "key": "asset_class",
+      "level": "line",
+      "name": "Asset Class",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE1",
+      "type": "text",
+      "required": false,
+      "values": ["Capex - IT equipment", "Capex - Furniture and fittings", "Capex - Motor vehicles", "Capex - Plant and machinery", "Capex - Buildings and improvements", "Opex - Consumables", "Opex - Professional services", "Opex - Maintenance and repairs", "Opex - Utilities and rent", "Not applicable"],
+      "hint": "Capex or opex classification.",
+      "guide": "Asset classification used for capital reporting. Pick from the list. This one deliberately has a long value set, to show that a list too long for an inline drop-down is written to the hidden Lists sheet instead."
+    },
+    {
+      "key": "delivery_contact",
+      "level": "schedule",
+      "name": "Site Contact",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE1",
+      "type": "text",
+      "required": false,
+      "hint": "Who to call on delivery.",
+      "guide": "Name and phone number of the person to contact when this delivery arrives on site."
+    },
+    {
+      "key": "cost_centre_owner",
+      "level": "distribution",
+      "name": "Cost Centre Owner",
+      "context": "MIGRATION",
+      "attribute": "ATTRIBUTE1",
+      "type": "text",
+      "required": false,
+      "hint": "Approver for this cost centre.",
+      "guide": "Person accountable for the cost centre this distribution is charged to."
+    }
+  ]
+}
